@@ -1,0 +1,29 @@
+.logo a{
+    font-family: EN-bold;
+    font-weight: 900;
+    font-size: 22px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+.nav-bar ul{
+    display: flex;
+    gap: 25px;
+    font-size: 17px;
+}
+.base-line{
+    height: 1px;
+    margin-top: 20px;
+    background-color: rgba(203, 203, 203, 0.736);
+}
+.nav-bar a{
+    transition: all 0.5s;
+    cursor: pointer;
+    font-size: 17px;
+}
+.nav-bar a:hover{
+    color: rgb(13, 168, 34);
+  
+}

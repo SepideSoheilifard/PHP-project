@@ -1,0 +1,39 @@
+html , body , *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: FA-Medium;
+}
+@font-face {
+    font-family: EN-bold;
+    src: url(../fonts/Yekan\ Bakh\ EN\ 06\ Bold.ttf);
+}
+@font-face {
+    font-family: FA-regular;
+    src: url(../fonts/Yekan\ Bakh\ FA\ 04\ Regular.ttf);
+}
+@font-face {
+    font-family: FA-Medium;
+    src: url(../fonts/Yekan\ Bakh\ FA\ 05\ Medium.ttf);
+}
+@font-face {
+    font-family: FA-Bold;
+    src: url(../fonts/Yekan\ Bakh\ FA\ 06\ Bold.ttf);
+
+}
+.container{
+     width: 85%;
+    margin-inline: auto;
+}
+button{
+    border: unset;
+    background-color: unset;
+}
+li{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,12 @@
+.footer-div {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 20px;
+    margin-top: 50px;
+}
+.footer-div p{
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 10px;
+}

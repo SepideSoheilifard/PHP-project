@@ -1,12 +1,39 @@
 <?php
 include "includes/header.php";
- if(isset($_GET['postid']))
+$errorInputName="";
+$errorInputComment="";
+$succesComment="";
+
+if(isset($_GET['postid']))
+
     {
         $postId=$_GET['postid'];
         $post=$conn->query("select * from posts where id=$postId")->fetch();
         $categoryId=$post['category_id'];
         
     }
+if(isset($_POST['send']))
+    {
+        $name=$_POST['name'];
+        $comment=$_POST['comment'];
+        $postId=$_POST['postId'];  
+        $post=$conn->query("select * from posts where id=$postId")->fetch();
+        $categoryId=$post['category_id'];   
+
+        if(empty($name))
+            $errorInputName="لطفا نام را وارد کنید";
+        
+        if(empty($comment))
+            $errorInputComment="لطفا متن کامنت را وارد کنید";
+
+        if(!empty($name) and !empty($comment))
+        {
+            $insertComment=$conn->query("insert into comments(name,comment,post_id)
+                values('$name','$comment',$postId)");
+            $succesComment="کامنت شما با موفقیت ثبت شد و بعد از تایید مدیر نمایش داده خواهد شد";
+
+        }
+    }    
 ?>
          <section class="main-section container">
             <!-- posts content  -->
@@ -18,16 +45,16 @@ include "includes/header.php";
                          alt="">
                     </figure>
                     <div class="title-cardsingle">
-                        <h3><?= $post['title'];?> </h3>
-                        <button><?= getCategory($categoryId);?></button>
+                        <h3><?= $post['title'];?></h3>
+                        <button><?= getcategory($categoryId); ?></button>
                     </div>
                     <p>
-                         <?= $post['body']?>
+                        <?= $post['body']?>
                     </p>
                     <div class="bottom-cardsingle">
-                
+                         
                         <span>نویسنده:
-                           <?= $post['author'];?>
+                          <?= $post['author'];?>
                             </span>
                     </div>
                 </article>
@@ -43,43 +70,48 @@ include "includes/header.php";
         </section>
             <!-- comment section  -->
         <section class="comment-section container">
-            <div class="comment-div">
+            <form class="comment-div" action="single.php" method="post">
                 <h4>ارسال کامنت</h4>
                 <label for="">نام</label>
-                <input type="text">
+                <?php if(!empty($errorInputName)) :?>
+                    <div class="danger">
+                        <?= $errorInputName ?>
+                    </div>
+                <?php endif ?>    
+                <input type="text" name="name">
                 <label for="">متن کامنت</label>
-                <textarea name="" id="" placeholder="کامنت خودرا بنویسید"></textarea>
-                <button type="submit" class="send-btn">ارسال</button>
+                <?php if(!empty($errorInputComment)) :?>
+                    <div class="danger">
+                        <?= $errorInputComment ?>
+                    </div>
+                <?php endif ?>  
+                <textarea name="comment" id="" placeholder="کامنت خودرا بنویسید"></textarea>
+                <input type="hidden" name="postId" value="<?= $postId ?>">
+                <button type="submit" name="send" class="send-btn">ارسال</button>
+            </form>
+        <div>
+            <div class="com-title">
+                <h4>تعداد کامنت : <?= countComment($postId) ?></h4>
+                <h1 class="small-line"></h1>
             </div>
-            <div>
-                 <div class="member-comment">
+            <?php
+               $comments=$conn->query("select * from comments where status=1 and post_id=$postId");
+            ?>
+            <?php foreach($comments as $comment):?>
+            <div class="member-comment" action="single.php" method="post">
                 <div class="name-comment">
                     <figure>
                         <img src="./images/person-icon.jpg" alt="">
                     </figure>
-                    <span>محمد صالحی</span>
+                    <span><?= $comment['name'] ?></span>
                 </div>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت </p>
+                <p>
+                    <?= $comment['comment'] ?>
+                </p>
             </div>
-            <div class="member-comment">
-                <div class="name-comment">
-                    <figure>
-                        <img src="./images/person-icon.jpg" alt="">
-                    </figure>
-                    <span>محمد صالحی</span>
-                </div>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت </p>
-            </div>
-            <div class="member-comment">
-                <div class="name-comment">
-                    <figure>
-                        <img src="./images/person-icon.jpg" alt="">
-                    </figure>
-                    <span>محمد صالحی</span>
-                </div>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت </p>
-            </div>
-            </div>
+            <?php endforeach ?>
+           
+        </div>
             
         </section>
     </main>

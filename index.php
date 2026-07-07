@@ -8,6 +8,12 @@
         $posts=$conn->query("select * from posts");
     }
     
+    if(isset($_POST['search']))
+    {
+        $keyword=$_POST['keyword'];
+        $posts=$conn->query("select * from posts where title like '%$keyword%' ");      
+    }
+
     $inputErrorName='';
     $inputErrorEmail='';
     $successSubscribe='';
@@ -48,7 +54,7 @@
                     </figure>
                     <div class="title-card">
                         <h3><?= $post['title'];?> </h3>
-                        <button><?= getCategory($categoryId);?></button>
+                        <button><?= getcategory($categoryId); ?></button>
                     </div>
                     <p>
                         <?= $post['body']?>

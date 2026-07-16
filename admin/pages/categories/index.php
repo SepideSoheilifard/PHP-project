@@ -1,43 +1,12 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="fa">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>php tutorial || blog project || shetabamooz</title>
-
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-            crossorigin="anonymous"
-        />
-
-        <link rel="stylesheet" href="../../assets/css/style.css" />
-    </head>
-
-    <body>
-        <header
-            class="navbar sticky-top bg-secondary flex-md-nowrap p-0 shadow-sm"
-        >
-            <a
-                class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white"
-                href="index.html"
-                >پنل ادمین</a
-            >
-
-            <button
-                class="ms-2 nav-link px-3 text-white d-md-none"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#sidebarMenu"
-            >
-                <i class="bi bi-justify-left fs-2"></i>
-            </button>
-        </header>
+<?php include "../../includes/header.php";
+$categories=$conn->query("select * from categories");
+if(isset($_GET['id']) and isset($_GET['table']))
+    {
+        $id=$_GET['id'];
+        $table=$_GET['table'];
+        delete($table,$id);
+    }
+?>
 
         <div class="container-fluid">
             <div class="row">
@@ -78,7 +47,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-                                        href="./index.html"
+                                        href="../posts/index.html"
                                     >
                                         <i
                                             class="bi bi-file-earmark-image-fill fs-4 text-secondary"
@@ -90,7 +59,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 text-secondary"
-                                        href="../categories/index.html"
+                                        href="./index.html"
                                     >
                                         <i
                                             class="bi bi-folder-fill fs-4 text-secondary"
@@ -135,32 +104,60 @@
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
                     >
-                        <h1 class="fs-3 fw-bold">ویرایش دسته بندی</h1>
+                        <h1 class="fs-3 fw-bold">دسته بندی ها</h1>
+
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <a href="./create.php" class="btn btn-sm btn-dark">
+                                ایجاد دسته بندی
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- Posts -->
+                    <!-- Categories -->
                     <div class="mt-4">
-                        <form class="row g-4">
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <label class="form-label">عنوان دسته بندی</label>
-                                <input type="text" class="form-control" value="طبیعت" />
-                            </div>
-
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-dark">
-                                     ویرایش
-                                </button>
-                            </div>
-                        </form>
+                        <div class="table-responsive small">
+                           <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>عنوان</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $row=1;
+                                    foreach($categories as $category): ?>
+                                    <tr>
+                                        <th><?= $row ?></th>
+                                        <td><?= $category['title'] ?></td>
+                                        <td>
+                                            <a
+                                                href="edit.php?id=<?= $category['id'] ?>"
+                                                class="btn btn-sm btn-outline-dark"
+                                                >ویرایش</a
+                                            >
+                                            <a
+                                                href="index.php?id=<?= $category['id'] ?>&table=categories"
+                                                class="btn btn-sm btn-outline-danger"
+                                                >حذف</a
+                                            >
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $row++;
+                                    endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </main>
             </div>
         </div>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-            crossorigin="anonymous"
-        ></script>
+        <!-- footer section -->
+         <?php
+        include "../../includes/footer.php";
+       ?> 
     </body>
 </html>

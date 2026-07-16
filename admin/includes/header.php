@@ -1,6 +1,14 @@
 <?php 
-include "../config/db.php" ;
-include "includes/function.php"; 
+$path=$_SERVER['REQUEST_URI'];
+if(str_contains($path, "pages"))
+    {
+        include "../../../config/db.php" ;
+        include "../../includes/function.php"; 
+    }else{
+        include "../config/db.php" ;
+        include "includes/function.php";
+    } 
+
 
 ?>
 <!DOCTYPE html>
@@ -12,12 +20,24 @@ include "includes/function.php";
 
         <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+            <?php 
+            if(str_contains($path, "pages")) :?>
+                href="../../assets/fonts/bootstrap-icons.css"
+
+            <?php else : ?>
+            href="assets/fonts/bootstrap-icons.css"
+            <?php endif ?>
         />
+            
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            <?php 
+            if(str_contains($path, "pages")) :?>
+            href="../../assets/css/bootstrap.min.css"
+            <?php else : ?>
+                href="assets/css/bootstrap.min.css"
+            <?php endif ?>
             rel="stylesheet"
-            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+          
             crossorigin="anonymous"
         />
 

@@ -1,44 +1,19 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="fa">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>php tutorial || blog project || shetabamooz</title>
+<?php include "../../includes/header.php";
+$inputErrorTitle="";
+if(isset($_POST['create']))
+    {
+        $title=$_POST['title'];
 
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-            crossorigin="anonymous"
-        />
-
-        <link rel="stylesheet" href="../../assets/css/style.css" />
-    </head>
-
-    <body>
-        <header
-            class="navbar sticky-top bg-secondary flex-md-nowrap p-0 shadow-sm"
-        >
-            <a
-                class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white"
-                href="index.html"
-                >پنل ادمین</a
-            >
-
-            <button
-                class="ms-2 nav-link px-3 text-white d-md-none"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#sidebarMenu"
-            >
-                <i class="bi bi-justify-left fs-2"></i>
-            </button>
-        </header>
-
+        if(empty($title))
+            $inputErrorTitle="لطفا عنوان را وارد کنید";
+        if(!empty($title))
+            {
+              $createCategory=$conn->query("insert into categories (`title`) values ('$title')");
+              header("Location:index.php");
+            }
+        
+    }
+?>
         <div class="container-fluid">
             <div class="row">
                 <!-- Sidebar Section -->
@@ -140,14 +115,17 @@
 
                     <!-- Posts -->
                     <div class="mt-4">
-                        <form class="row g-4">
+                        <form class="row g-4" method="post">
                             <div class="col-12 col-sm-6 col-md-4">
                                 <label class="form-label">عنوان دسته بندی</label>
-                                <input type="text" class="form-control" />
+                                <?php if(!empty($inputErrorTitle)): ?>
+                                    <div class="alert alert-danger"><?= $inputErrorTitle?></div>
+                                <?php endif ?>
+                                <input type="text" name="title" class="form-control" />
                             </div>
 
                             <div class="col-12">
-                                <button type="submit" class="btn btn-dark">
+                                <button name="create" type="submit" class="btn btn-dark">
                                      ایجاد
                                 </button>
                             </div>
@@ -157,10 +135,9 @@
             </div>
         </div>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-            crossorigin="anonymous"
-        ></script>
+        <!-- footer section -->
+         <?php
+        include "../../includes/footer.php";
+       ?> 
     </body>
 </html>

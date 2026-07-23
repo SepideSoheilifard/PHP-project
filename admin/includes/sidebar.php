@@ -22,7 +22,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 text-secondary"
-                                        href="index.php"
+                                        href="/phptamrin/admin"
                                     >
                                         <i
                                             class="bi bi-house-fill fs-4 text-secondary"
@@ -34,7 +34,7 @@
                                    <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-                                        href="./pages/categories/index.php"
+                                        href="/phptamrin/admin/pages/categories/index.php"
                                     >
                                         <i
                                             class="bi bi-folder-fill fs-4 text-secondary"
@@ -47,7 +47,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-                                        href="./pages/posts/index.html"
+                                        href="/phptamrin/admin/pages/posts/index.php"
                                     >
                                         <i
                                             class="bi bi-file-earmark-image-fill fs-4 text-secondary"
@@ -61,7 +61,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-                                        href="./pages/comments/index.html"
+                                        href="/phptamrin/admin/pages/comments/index.php"
                                     >
                                         <i
                                             class="bi bi-chat-left-text-fill fs-4 text-secondary"
@@ -74,7 +74,7 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"
-                                        href="#"
+                                        href="/phptamrin/admin/pages/auth/logout.php"
                                     >
                                         <i
                                             class="bi bi-box-arrow-right fs-4 text-secondary"

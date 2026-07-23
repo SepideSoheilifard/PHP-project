@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 $path=$_SERVER['REQUEST_URI'];
 if(str_contains($path, "pages"))
     {
@@ -9,7 +11,11 @@ if(str_contains($path, "pages"))
         include "includes/function.php";
     } 
 
-
+if(empty($_SESSION['email']))
+    {
+        $errorMes='لطفا ابتدا وارد شوید';
+        header("Location:pages/auth/login.php?errorMes=$errorMes");
+    }
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">

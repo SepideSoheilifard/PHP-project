@@ -1,5 +1,5 @@
 <?php include "../../includes/header.php";
-$categories=$conn->query("select * from categories");
+$posts=$conn->query("select * from posts order by id desc");
 if(isset($_GET['id']) and isset($_GET['table']))
     {
         $id=$_GET['id'];
@@ -18,41 +18,46 @@ if(isset($_GET['id']) and isset($_GET['table']))
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
                     >
-                        <h1 class="fs-3 fw-bold">دسته بندی ها</h1>
+                        <h1 class="fs-3 fw-bold">مقالات</h1>
 
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <a href="./create.php" class="btn btn-sm btn-dark">
-                                ایجاد دسته بندی
+                                ایجاد مقاله
                             </a>
                         </div>
                     </div>
 
-                    <!-- Categories -->
-                    <div class="mt-4">
+                     <!-- Posts -->
+                     <div class="mt-4">
                         <div class="table-responsive small">
                            <table class="table table-hover align-middle">
                                 <thead>
                                     <tr>
                                         <th>ردیف</th>
+                                        <th>شناسه</th>
                                         <th>عنوان</th>
+                                        <th>نویسنده</th>
                                         <th>عملیات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
                                     $row=1;
-                                    foreach($categories as $category): ?>
+                                    foreach($posts as $post): ?>
                                     <tr>
                                         <th><?= $row ?></th>
-                                        <td><?= $category['title'] ?></td>
+                                        <td><?= $post['id'] ?></td>
+                                        <td><?= $post['title'] ?></td>
+                                        <td><?= $post['author'] ?></td>
+                                        
                                         <td>
                                             <a
-                                                href="edit.php?id=<?= $category['id'] ?>"
+                                                href="edit.php?id=<?= $post['id'] ?>"
                                                 class="btn btn-sm btn-outline-dark"
                                                 >ویرایش</a
                                             >
                                             <a
-                                                href="index.php?id=<?= $category['id'] ?>&table=categories"
+                                                href="index.php?id=<?= $post['id'] ?>&table=posts"
                                                 class="btn btn-sm btn-outline-danger"
                                                 >حذف</a
                                             >
@@ -69,9 +74,10 @@ if(isset($_GET['id']) and isset($_GET['table']))
             </div>
         </div>
 
-        <!-- footer section -->
-         <?php
-        include "../../includes/footer.php";
-       ?> 
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"
+        ></script>
     </body>
 </html>

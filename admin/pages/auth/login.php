@@ -1,3 +1,29 @@
+<?php
+include "../../../config/db.php";
+session_start();
+$errorMes='';
+if(isset($_GET['errorMes']))
+    {
+        $errorMes=$_GET['errorMes'];
+    }else{
+        $errorMes='';
+    }
+if(isset($_POST['login']))
+    {
+        $email=$_POST['email'];
+        $password=$_POST['password'];
+        $check=$conn->query("select * from users where email='$email' and pass='$password'");
+        if($check->rowCount() == 1)
+            {
+                $_SESSION['email']=$email;
+                header("Location:../../index.php");
+            }else{
+                $errorMes='نام کاربری و کلمه عبور اشتباه است';
+                header("Location:login.php?errorMes=$errorMes");
+            }
+    }
+?>
+
 <!DOCTYPE html>
 <html dir="rtl" lang="fa">
     <head>
@@ -16,18 +42,21 @@
     </head>
     <body class="auth">
         <main class="form-signin w-100 m-auto">
-            <form>
+            <form method="post">
+                <?php if($errorMes) : ?>
+                    <div class="alert alert-danger"><?= $errorMes ?></div>
+                <?php endif ?>    
                 <div class="fs-2 fw-bold text-center mb-4">shetabamooz</div>
                 <div class="mb-3">
                     <label class="form-label">ایمیل</label>
-                    <input type="email" class="form-control" />
+                    <input type="email" name="email" class="form-control" />
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">رمز عبور</label>
-                    <input type="password" class="form-control" />
+                    <input type="password" name="password" class="form-control" />
                 </div>
-                <button class="w-100 btn btn-dark mt-4" type="submit">
+                <button class="w-100 btn btn-dark mt-4" name="login" type="submit">
                     ورود
                 </button>
             </form>

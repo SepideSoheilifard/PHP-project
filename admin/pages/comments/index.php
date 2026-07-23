@@ -1,5 +1,12 @@
 <?php include "../../includes/header.php";
-$categories=$conn->query("select * from categories");
+
+if(isset($_GET['id']))
+    {
+       $id=$_GET['id'];
+       $commentupdate=$conn->query("update comments set status=1 where id=$id");
+       header("Location:index.php");
+    }
+$comments=$conn->query("select * from comments");
 if(isset($_GET['id']) and isset($_GET['table']))
     {
         $id=$_GET['id'];
@@ -12,50 +19,56 @@ if(isset($_GET['id']) and isset($_GET['table']))
             <div class="row">
                 <!-- Sidebar Section -->
                 <?php include "../../includes/sidebar.php" ?>
-
                 <!-- Main Section -->
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
                     >
-                        <h1 class="fs-3 fw-bold">دسته بندی ها</h1>
-
-                        <div class="btn-toolbar mb-2 mb-md-0">
-                            <a href="./create.php" class="btn btn-sm btn-dark">
-                                ایجاد دسته بندی
-                            </a>
-                        </div>
+                        <h1 class="fs-3 fw-bold">کامنت ها</h1>
                     </div>
 
-                    <!-- Categories -->
+                    <!-- Comments -->
                     <div class="mt-4">
                         <div class="table-responsive small">
                            <table class="table table-hover align-middle">
                                 <thead>
                                     <tr>
-                                        <th>ردیف</th>
-                                        <th>عنوان</th>
+                                        <th>id</th>
+                                        <th>نام</th>
+                                        <th>متن کامنت</th>
                                         <th>عملیات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
                                     $row=1;
-                                    foreach($categories as $category): ?>
+                                    foreach($comments as $comment): ?>
+                                    
                                     <tr>
                                         <th><?= $row ?></th>
-                                        <td><?= $category['title'] ?></td>
+                                        <td><?= $comment['name'] ?></td>
+                                        <td><?= $comment['comment'] ?></td>
+                                    
                                         <td>
+                                            <?php if($comment['status']==1): ?>
                                             <a
-                                                href="edit.php?id=<?= $category['id'] ?>"
-                                                class="btn btn-sm btn-outline-dark"
-                                                >ویرایش</a
+                                                href="#"
+                                                class="btn btn-sm btn-outline-dark disabled"
+                                                >تایید شده</a
                                             >
+                                            <?php else :?>
+                                                <a
+                                                href="index.php?id=<?= $comment['id'] ?>"
+                                                class="btn btn-sm btn-outline-info"
+                                                >در انتظار تایید</a
+                                            >
+                                            <?php endif ?>
                                             <a
-                                                href="index.php?id=<?= $category['id'] ?>&table=categories"
+                                                href="index.php?id=<?= $comment['id'] ?>&table=comments"
                                                 class="btn btn-sm btn-outline-danger"
                                                 >حذف</a
                                             >
+                                            
                                         </td>
                                     </tr>
                                     <?php
@@ -69,9 +82,10 @@ if(isset($_GET['id']) and isset($_GET['table']))
             </div>
         </div>
 
-        <!-- footer section -->
-         <?php
-        include "../../includes/footer.php";
-       ?> 
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"
+        ></script>
     </body>
 </html>
